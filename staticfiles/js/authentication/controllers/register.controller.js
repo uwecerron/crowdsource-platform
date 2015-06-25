@@ -2,8 +2,35 @@
  * Register controller
  * @namespace crowdsource.authentication.controllers
  */
+
+    //Steps Factory to instantiate different types
 (function () {
     'use strict';
+
+    //Steps Factory
+    function StepsFactory() {};
+    StepsFactory.prototype.createStepsType = function createStepsType( option ) {
+      var steps = null;
+      
+      if( option === 'requester' ) {
+        //should steps differ instatiate different amount of steps
+             // $scope.steps = [
+             //    'Step 1: Personal Information',
+             //    'Step 2: Skill Information'
+             //  ];
+      } else if( option === 'worker' ) {
+            steps = [
+            'Step 1: Personal Information',
+            'Step 2: Skill Information'
+          ];
+      }
+      
+      if( steps === null ) {
+        return false;
+      }
+      
+      return steps;
+    } 
 
     angular
         .module('crowdsource.authentication.controllers')
@@ -66,59 +93,58 @@
                         });
                 }
 
+                var myStepsFactory = new StepsFactory();
 
-                  $scope.steps = [
-                    'Step 1: Personal Information',
-                    'Step 2: Skill Information'
-                  ];
-                  $scope.selection = $scope.steps[0];
+                $scope.steps = myStepsFactory.createStepsType("worker");
+                $scope.selection = $scope.steps[0];
 
-                  $scope.getCurrentStepIndex = function(){
+                $scope.getCurrentStepIndex = function(){
                     // Get the index of the current step given selection
                     return _.indexOf($scope.steps, $scope.selection);
-                  };
+                };
 
-                  // Go to a defined step index
-                  $scope.goToStep = function(index) {
+                // Go to a defined step index
+                $scope.goToStep = function(index) {
                     if ( !_.isUndefined($scope.steps[index]) )
                     {
                       $scope.selection = $scope.steps[index];
                     }
-                  };
+                };
 
-                  $scope.hasNextStep = function(){
+                $scope.hasNextStep = function(){
                     var stepIndex = $scope.getCurrentStepIndex();
                     var nextStep = stepIndex + 1;
                     // Return true if there is a next step, false if not
                     return !_.isUndefined($scope.steps[nextStep]);
-                  };
+                };
 
-                  $scope.hasPreviousStep = function(){
+                $scope.hasPreviousStep = function(){
                     var stepIndex = $scope.getCurrentStepIndex();
                     var previousStep = stepIndex - 1;
                     // Return true if there is a next step, false if not
                     return !_.isUndefined($scope.steps[previousStep]);
-                  };
+                };
 
-                  $scope.incrementStep = function() {
+                $scope.incrementStep = function() {
                     if ( $scope.hasNextStep() )
                     {
                       var stepIndex = $scope.getCurrentStepIndex();
                       var nextStep = stepIndex + 1;
                       $scope.selection = $scope.steps[nextStep];
                     }
-                  };
+                };
 
-                  $scope.decrementStep = function() {
+                $scope.decrementStep = function() {
                     if ( $scope.hasPreviousStep() )
                     {
                       var stepIndex = $scope.getCurrentStepIndex();
                       var previousStep = stepIndex - 1;
                       $scope.selection = $scope.steps[previousStep];
                     }
-                  };
-
-
+                };
 
             }]);
+
+     
+
 })();
