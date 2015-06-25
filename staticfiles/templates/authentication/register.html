@@ -4,13 +4,23 @@
 
         <p>Your Journey Begins Here</p>
         <hr>
-        <div class="row">
+<!--         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="well">
                     <form name="form" role="form" ng-submit="vm.register()">
 
                         <div class="alert alert-danger fadein fadeout" ng-show="vm.error && form.$pristine"
                              ng-bind="vm.error"></div>
+                          <div class="form-group">
+                            <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Select Country of Residence <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">small</a></li>
+                                <li><a href="#">medium</a></li>
+                                <li><a href="#">large</a></li>
+                            </ul>
+                        </div>
 
                         <div class="form-group">
                             <label for="register__email left">First Name</label>
@@ -48,6 +58,14 @@
                                    placeholder="Confirm Password"/>
                             <span ng-show="form.password2.$error.compareTo && form.password2.$dirty" class="help-block">Passwords do not match.</span>
                         </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : form.number.$invalid && form.number.$dirty }">
+                            <label for="phone_number">Phone Number</label>
+                            <input type="number" class="form-control" id="phone_number" name="phone_number"
+                                   ng-required="true" ng-model="vm.phone_number" backend-error
+                                   placeholder="305-232-2312"/>
+                            <span ng-show="form.email.$error.backend && form.email.$dirty" class="help-block">{{vm.errors.email}}</span>
+                        </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary"
                                     ng-disabled="form.$invalid || form.$pending">Sign Up</button>
@@ -55,7 +73,150 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
+
+
+<div class="content">
+  <form class="form-horizontal" ng-switch on="form_selection">
+
+    <ul class="nav nav-tabs">
+      <li ng-repeat="step in steps" ng-class="{active: $index==getCurrentStepIndex()}">
+        <a href="javascript:void(0)" ng-click="goToStep($index)">{{step}}</a>
+      </li>
+    </ul>
+    <div ng-switch on="selection">
+
+      <!-- First Step -->
+      <div ng-switch-when="Step 1: Personal Information">
+          <div class="row">
+              <div class="col-md-4 col-md-offset-4">
+                  <div class="well">
+                      <form name="form" role="form" ng-submit="vm.register()">
+
+                          <div class="alert alert-danger fadein fadeout" ng-show="vm.error && form.$pristine"
+                               ng-bind="vm.error"></div>
+                            <div class="form-group">
+                              <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                  Select Country of Residence <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" role="menu">
+                                  <li><a href="#">small</a></li>
+                                  <li><a href="#">medium</a></li>
+                                  <li><a href="#">large</a></li>
+                              </ul>
+                          </div>
+
+                          <div class="form-group">
+                              <label for="register__email left">First Name</label>
+                              <input type="text" class="form-control" id="register__firstname" name="firstname"
+                                     ng-required="true" ng-model="vm.firstname"
+                                     placeholder="First Name"/>
+                          </div>
+                          <div class="form-group">
+                              <label for="register__email">Last Name</label>
+                              <input type="text" class="form-control" id="register__lastname" name="lastname"
+                                     ng-required="true" ng-model="vm.lastname"
+                                     placeholder="Last Name"/>
+                          </div>
+                          <div class="form-group" ng-class="{ 'has-error' : form.email.$invalid && form.email.$dirty }">
+                              <label for="register__email">Email</label>
+                              <input type="email" class="form-control" id="register__email" name="email"
+                                     ng-required="true" ng-model="vm.email" backend-error
+                                     placeholder="Email"/>
+                              <span ng-show="form.email.$error.backend && form.email.$dirty" class="help-block">{{vm.errors.email}}</span>
+                          </div>
+
+                          <div class="form-group" ng-class="{ 'has-error' : form.password1.$invalid && form.password1.$dirty }">
+                              <label for="register__password">Password</label>
+                              <input type="password" class="form-control" id="register__password1" name="password1"
+                                     ng-required="true"
+                                     ng-model="vm.password1" ng-minlength=8
+                                     placeholder="Password - at least 8 characters long"/>
+                              <span ng-show="form.password1.$error.minlength && form.password1.$dirty" class="help-block">Min. 8 characters are required.</span>
+                          </div>
+                          <div class="form-group" ng-class="{ 'has-error' : form.password2.$invalid && form.password2.$dirty }">
+                              <label for="register__password">Password (repeat)</label>
+                              <input type="password" class="form-control" id="register__password2" name="password2"
+                                     ng-required="true"
+                                     ng-model="vm.password2" compare-to="vm.password1"
+                                     placeholder="Confirm Password"/>
+                              <span ng-show="form.password2.$error.compareTo && form.password2.$dirty" class="help-block">Passwords do not match.</span>
+                          </div>
+
+                          <div class="form-group" ng-class="{ 'has-error' : form.number.$invalid && form.number.$dirty }">
+                              <label for="phone_number">Phone Number</label>
+                              <input type="number" class="form-control" id="phone_number" name="phone_number"
+                                     ng-required="true" ng-model="vm.phone_number" backend-error
+                                     placeholder="305-232-2312"/>
+                              <span ng-show="form.email.$error.backend && form.email.$dirty" class="help-block">{{vm.errors.email}}</span>
+                          </div>
+                <!--           <div class="form-group">
+                              <button type="submit" class="btn btn-primary"
+                                      ng-disabled="form.$invalid || form.$pending">Sign Up</button>
+                          </div> -->
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Second Step -->
+      <div ng-switch-when="Step 2: Skill Information">
+          <div class="form-group">
+              <label for="register__email left">City</label>
+              <input type="text" class="form-control" id="register__firstname" name="firstname"
+                     ng-required="true" ng-model="vm.firstname"
+                     placeholder="First Name"/>
+          </div>
+          <div class="form-group">
+              <label for="register__email">Zip Code</label>
+              <input type="text" class="form-control" id="register__lastname" name="lastname"
+                     ng-required="true" ng-model="vm.lastname"
+                     placeholder="Last Name"/>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : form.email.$invalid && form.email.$dirty }">
+              <label for="register__email">SSN or Tax Identifier Number</label>
+              <input type="email" class="form-control" id="register__email" name="email"
+                     ng-required="true" ng-model="vm.email" backend-error
+                     placeholder="Email"/>
+              <span ng-show="form.email.$error.backend && form.email.$dirty" class="help-block">{{vm.errors.email}}</span>
+          </div>
+           <div class="form-group">
+                <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    Select Skills  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">small</a></li>
+                    <li><a href="#">medium</a></li>
+                    <li><a href="#">large</a></li>
+                </ul>
+            </div>
+                <div class="control-group">
+              <label class="control-label" for="teamMembers">Team Members</label>
+              <div class="controls">
+
+              </div>
+            </div>
+      </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <ul class="pager pull-left">
+      <li class="" ng-class="{disabled: !hasPreviousStep()}">
+        <a href="javascript:void(0);" ng-click="decrementStep()">&larr; Previous Step</a>
+      </li>
+      <li class="" ng-class="{disabled: !hasNextStep()}">
+        <a href="javascript:void(0);" ng-click="incrementStep()">Next Step &rarr;</a>
+      </li>
+    </ul>
+    <div class="pull-right"><button style="margin:20px 0;" class="btn btn-success">Sign Up</button></div>
+    <div class="clearfix"></div>
+  </form>
+</div>
     </div>
 </header>
 <p style="padding-top: 3px;" class="text-center">By clicking Sign Up, you agree to the <a ng-href="/terms">Terms</a></p>
+
+
+
+
